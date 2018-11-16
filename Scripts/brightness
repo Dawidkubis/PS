@@ -1,0 +1,13 @@
+#!/usr/bin/python -i
+
+import sys
+import os
+
+os.chdir('/sys/class/backlight/intel_backlight/')
+
+def main():
+    pass
+
+
+if __name__ == '__main__':
+    main()

@@ -1,0 +1,7 @@
+#!/usr/bin/python
+
+from pymouse import PyMouse
+
+
+MOUSE = PyMouse()
+MOUSE.click(*MOUSE.position())
