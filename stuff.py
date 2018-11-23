@@ -2,7 +2,7 @@
 This is a great file with some of the stuff I will be using consistently
             - DAWID J. KUBIS
 """
-from abc import *
+#from abc import *
 from time import time
 import functools
 
@@ -47,23 +47,6 @@ class MError(Exception):
         super().__init__()
         self.msg = msg
         print('----------ERROR---------')
-
-class Colors(ABC):
-    """
-    Terminal colors, use ENDC at the end
-    """
-    @abstractmethod
-    def __init__(self):
-        pass
-
-    HEADER = '\033[95m'
-    OKBLUE = '\033[94m'
-    OKGREEN = '\033[92m'
-    WARNING = '\033[93m'
-    FAIL = '\033[91m'
-    ENDC = '\033[0m'
-    BOLD = '\033[1m'
-    UNDERLINE = '\033[4m'
 
 #---------classes----------#
 if __name__ in ('__main__', '__console__'):
