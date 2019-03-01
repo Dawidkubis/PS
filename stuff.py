@@ -33,7 +33,7 @@ def generate_primes(lim):
     nums = list(range(2, lim))
     while nums != []:
         primes.append(nums[0])
-        nums = [i for i in nums if i%primes[-1] != 0]
+        nums = [i for i in nums if i % primes[-1] != 0]
     return primes
 #---------functions--------#
 #---------classes----------#
@@ -52,7 +52,7 @@ class MError(Exception):
 if __name__ in ('__main__', '__console__'):
     print('''
           THIS IS A MODULE
-          
+
           Meaning it Should not be run as __main__ or __console__
 
           dumbass

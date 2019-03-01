@@ -29,51 +29,31 @@ cisla = [i for i in cisla if i != '']
 cisla = [i for i in cisla if len(i) > 12]
 
 
-#	def biggest(cislo):	can be replaced with max() lol
-#		biggest = 0
-#
-#		while cislo != []:	#hleda nejvetsi cislo
-#
-#			num = cislo[0]
-#
-#			if num > biggest:
-#				biggest = num
-#				cislo = [i for i in cislo if i >= biggest]
-#			else:
-#				cislo.pop(0)
-#				
-#
-#		return(biggest)
+def rate(cislo):
+	x = 1
+	for i in [int(x) for x in cislo]:
+		x *= i
+	return x
 
-def instances(cislo, value): # funguje
-	the_biggest_ones = []
+def pos(nums,lim):
+	assert(len(nums)>=lim), 'LIM > LEN(NUMS)'
+	results = list()
 
-	for i, index in zip(cislo, range(len(cislo))):
-		if i == value:
-			the_biggest_ones.append(index)
+	for i in range(len(nums) - lim + 1):
+		results.append(nums[i:i + lim])
 
-	return the_biggest_ones
-#
-#	def reduce(cislo, instances):
-#		result = []
-#
-#		for i in instances:
-#			if i + 1 < len(cislo):
-#				result.append(cislo[i + 1])	
-#
-#		return result	LOL, ABSOLUTNE SPATNE
-#
-#	def back_together(cislo):
-#		result = []
-#		
-#		for i in range(13):
-#			if cislo == []:
-#				break
-#			result.append(max(cislo))
-#			cislo = reduce(cislo, instances(cislo, max(cislo)))
-#
-#		return result
-#
-#	print(instances(cislo, 9)) 
+	return results
 
+def main(cisla):
+	highscore = ['0', 0]
 
+	for x in cisla:
+		for y in x:
+			print(y)
+			if rate(y)>highscore[1]:
+				highscore = [y, rate(y)]
+
+	return highscore
+
+print(cisla)
+cisla = [pos(i,13) for i in cisla]

@@ -2,32 +2,18 @@ import math
 import os
 import time
 from copy import deepcopy
+from functools import reduce
 
-primez = []
-file = 'primes.txt'
-
-def is_prime (number):#actualize -> divide only by primes
+def is_prime (number):
     prime = True
 
     root = int(math.sqrt(number)) + 1
 
-    for i in range(2, root):
+    for i in generate_primes(root):
         if number % i == 0:
             prime = False
             break
     return prime
-
-def get_primes(file):
-    global primez
-
-    primez = []
-
-    save = open(file,'r')
-    for i in save.readlines():
-        primez.append(int(i))
-
-    if 2 not in primez:
-        primez.append(2)
 
 def flatten(lyst):
     output = []
@@ -45,110 +31,13 @@ def flatten(lyst):
 
     return output
 
-def generate_primes_old(lim):
-    pass
-
 def generate_primes(lim):
-    global primez
-    get_primes(file)
-    root = int(math.sqrt(lim)) + 1
-
-
-    primes = [i for i in primez if i < lim]
-    nums = list(range(primes[-1]+1,lim + 1))
-    #print(nums)
-    limyt = len(primes)
-
-
-    primes = primes + nums
-
-    #print('nums : ',nums)
-    #print('limyt : ',limyt)
-    #print('root : ', root)
-    #print('primes : ',primes)
-
-
-    for prime in primes:
-        if prime > root or primes[limyt:] == []:
-            break
-        if prime == -1:
-            continue
-        for num, index in zip(primes[limyt:],range(limyt, len(primes))):
-            #print(num,index)
-            if num % prime == 0 and not num is prime:
-                #print('index : ', index, '|','num : ',num,'|','prime : ',prime)
-                primes[index] = -1
-    #print('primes : ',primes)
-
-    primes = [i for i in primes if i != -1]
-
-    primes_save(tuple(primes),file)
-
-    return tuple(primes)
-
-def primes_save(primes,file): # add get_primes() and upgrade
-    primes = list(primes)
-    nums = []
-    #print('hey')
-    #for i in primes:
-    #    if is_prime(i) != True: PRIME CONTROL
-    #        raise Exception
-    try:
-        save = open(file,'r+')
-        #print(save)
-    except:
-        print('oh, fuck')
-        raise Exception
-
-    o = save.read()
-    nums = o.split('\n')
-    #print(nums)
-
-    for i, x in zip(nums,range(len(nums))):
-        #print(nums[x] is i)
-        #print(i)
-        #print(type(i))
-        if i == ' ' or i == '\n' or i == '\t' or i == '':
-            del nums[x]
-            #print('deleting...')
-    #print('nums : ' + str(nums))
-
-    for num,x in zip(nums,range(len(nums))):
-        nums[x] = int(num)
-    #print(nums)
-
-    if len(nums) == 0:
-        print('nums is probably blank...')
-        save = open(file,'w')
-        for prime in primes:
-            save.write(str(prime) + '\n')
-        return
-
-    save = open(file,'w')
-
-    #print('primes' + str(primes))
-
-
-    for p in range(len(primes)):
-        if primes[p] in nums:
-            continue
-        for n in range(len(nums)):
-            if primes[p] < nums[n]:
-                nums.insert(n, primes[p])
-                break
-            if n + 1 == len(nums):
-                nums.append(primes[p])
-
-    del primes
-    #print('nums  : '+str(nums) )
-
-    for num in nums:
-        save.write(str(num)+'\n')
-        #print(num)
-
-    save.close()
-
-
+    primes = []
+    nums = list(range(2, lim))
+    while nums != []:
+        primes.append(nums[0])
+        nums = [i for i in nums if i%primes[-1] != 0]
+    return primes
 
 def prime_div (num):
 
@@ -170,29 +59,20 @@ def prime_div (num):
 
     return tuple(divs)
 
-def multiplication(nums):
-    x = 1
-    for i in nums:
-        x = x*i
-    return x
-
-def subsets_old(*sets):
-    sets = flatten(sets)
+def subsets(*sets):
+    #sets = flatten(sets)
     x = len(sets)
     for i in range(2**x):
         yield [sets[j] for j in range(x) if (i&(1<<j))]
 
-def subsets(*sets):
-    sets = flatten(sets)
-    pass
-
 def divs(num):
-    for i in subsets(prime_div(num)):
-        yield multiplication(i)
+    for i in subsets(*prime_div(num)):
+        if i == []:
+            yield 1
+            continue
+        yield reduce((lambda a,b:a*b), i)
 
 """---------------------------------------"""
-file = 'primes.txt'
 #num = int(input('number : '))
 #print(num)
 #print(type(num))
-divs(128)
