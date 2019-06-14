@@ -2,7 +2,6 @@
 This is a great file with some of the stuff I will be using consistently
             - DAWID J. KUBIS
 """
-#from abc import *
 from time import time
 import functools
 
@@ -39,20 +38,19 @@ def generate_primes(lim):
 #---------classes----------#
 class MError(Exception):
     """
-    An Exception with a message
-    Should be printed after catching
+    An Exception class with args and kwargs
     """
 
-    def __init__(self, msg):
+    def __init__(self, *args, **kwargs):
         super().__init__()
-        self.msg = msg
-        print('----------ERROR---------')
+        self.args = args
+        self.kwargs = kwargs
 
 #---------classes----------#
 if __name__ in ('__main__', '__console__'):
     print('''
           THIS IS A MODULE
-          
+
           Meaning it Should not be run as __main__ or __console__
 
           dumbass
