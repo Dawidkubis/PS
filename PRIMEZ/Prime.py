@@ -14,8 +14,8 @@ def is_prime (number):
             prime = False
             break
     return prime
-
-def flatten(lyst):
+'''
+def flatten_old(lyst):
     output = []
     for i in lyst:
         if i == []:
@@ -30,6 +30,22 @@ def flatten(lyst):
             #print('if2 : ', output)
 
     return output
+'''
+def flatten(lst):
+    result = deepcopy(lst)
+
+    i = 0
+    while i < len(result) + move:
+
+        if type(result[i]) in (list, tuple):
+            print(result[i])
+            temp = result.pop(i)
+            result = result + temp
+            i -= len(temp)
+
+        i += 1
+    return result
+
 
 def generate_primes(lim):
     primes = []
@@ -39,8 +55,7 @@ def generate_primes(lim):
         nums = [i for i in nums if i%primes[-1] != 0]
     return primes
 
-def prime_div (num):
-
+def prime_div(num):
     root = int(math.sqrt(num) + 1)
     #print('half : '+str(half))
     primes = generate_primes(root)
