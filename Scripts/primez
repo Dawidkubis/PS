@@ -1,3 +1,0 @@
-#!/bin/bash
-
-ipython -i  /home/dawidkubis/PS/PRIMEZ/Prime.py
