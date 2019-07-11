@@ -1,3 +1,4 @@
+#!/usr/bin/python -i
 import math
 import os
 import time
