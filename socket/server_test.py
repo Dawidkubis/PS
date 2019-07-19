@@ -12,3 +12,6 @@ with socket.socket() as s:
 
         info = client.recv(1024)
         print(f'recieved : {info}')
+
+        if not info:
+            break
