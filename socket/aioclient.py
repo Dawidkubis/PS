@@ -6,29 +6,17 @@ import os
 import socket
 from cmd import Cmd
 
-class Connection(Cmd):
-    prompt = 'conection > ' 
-
-    def __init__(self, so):
-        self.so = so
-        super().__init__()
-    
-    def do_send(self, arg):
-        self.so.sendall(arg.encode()+b'\n')
-
-    def do_close(self, arg):
-        self.so.close()
-        return True
-
 class Shell(Cmd):
 
     prompt = f'({socket.gethostname()})> '
+
+    so = None
 
     def do_echo(self, arg):
         '''echoes the arguments'''
         print(arg)
 
-    def do_socketconnect(self, arg):
+    def do_connect(self, arg):
         '''connects to server via python sockets'''
         
         arg = [i.strip() for i in arg.strip().split()]
@@ -43,11 +31,17 @@ class Shell(Cmd):
 
         so = socket.socket()
         so.connect((arg[0], arg[1]))
-        i = Connection(so)
-        i.cmdloop()
+        self.so = so
 
-    def do_asyncconnect(self, arg):
-        '''connects to server via python asyncio'''
+    def do_send(self, arg):
+        '''sends data to server'''
+        
+        self.so.sendall(arg.encode()+b'\n')
+
+    def do_close(self, arg):
+        '''closes socket'''
+
+        self.so.close()
 
     def do_exit(self, arg):
         '''exits the shell'''
